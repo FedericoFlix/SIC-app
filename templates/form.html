@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi página con gráfico</title>
+  <style>
+    .esquina-superior-derecha {
+      position: absolute;
+      top: 20px;     /* distancia desde el borde superior */
+      right: 20px;   /* distancia desde el borde derecho */
+      width: 400px;  /* ajustá según tu imagen */
+      height: auto;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="{{ url_for('static', filename='imagen.png') }}" alt="Gráfico" class="esquina-superior-derecha">
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <title>Formulario de carga</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        textarea { font-family: monospace; }
+        .flash { padding: 8px 12px; margin-bottom: 8px; border-radius: 6px; }
+        .success { background: #e6ffed; border: 1px solid #2ecc71; }
+        .error { background: #ffe6e6; border: 1px solid #e74c3c; }
+        .warn { background: #fff7e6; border: 1px solid #f39c12; }
+    </style>
+</head>
+<body>
+    <h2>Solicitud Interna de Compras</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <p><strong>Fecha:</strong> {{ fecha }}</p>
+    <p><strong>Número SIC (propuesto):</strong> {{ sic }}</p>
+
+    <form action="{{ url_for('guardar') }}" method="post" autocomplete="off">
+        <label>OC Cliente:</label><br>
+        <input type="text" name="oc_cliente" required><br><br>
+
+        <label>Cliente:</label><br>
+        <input type="text" name="cliente" required><br><br>
+
+        <label>Descripción y Cantidad:</label><br>
+        <textarea name="materiales" rows="15" cols="80" placeholder="Ej: Tornillo M4[TAB]10"></textarea><br><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>
